@@ -1,0 +1,1 @@
+cd eth-stonks-when && node index.js

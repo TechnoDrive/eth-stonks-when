@@ -1,1 +1,2 @@
-cd eth-stonks-when && node index.js
+node index.js
+pause
