@@ -16,6 +16,7 @@ let targetPrice = Number(prompt(`${chalk.bold.white('What base price would you l
 let checkerInterval = prompt(`${chalk.bold.white('Time between intervals to check ETH\'s price ')} ${chalk.bold.gray('(500 milliseconds, 5 seconds, 1 minute, 2 hours, etc.)')} `);
 // let exit = Boolean(prompt(`${chalk.bold.white('Would you like to repeat notifications?')} ${chalk.bold.gray('(More than notification after ETH hits the desired price, true or false, case sensitive)')} `))
 
+// a huge ass time table cause why not
 let timeConversionTable = {
     plural: {
         hours: 60 * 60 * 1000,
@@ -36,16 +37,16 @@ time[1] = timeConversionTable.plural[time[1]] || timeConversionTable.singular[ti
 time = time[0] * time[1];
 
 if (Number.isNaN(time)) {
-    console.log(chalk.red.bold('ERROR: Please enter a valid unit of time (hours, minutes, seconds, milliseconds)!'));
+    console.log(chalk.red.bold('ERROR: Please enter a valid unit of time (hours, minutes, seconds, milliseconds)!')); // gives you an error bc haha noob
     process.exit(0)
 }
 
 setInterval(() => {
     kraken.ticker('ETH', 'USD')
         .then(result => {
-            let currentPrice = result.result.XETHZUSD.o
+            let currentPrice = result.result.XETHZUSD.o // gets the price of the coin, in this case ETH
 
-            if (Math.round(currentPrice) > targetPrice - 1) {
+            if (Math.round(currentPrice) >= targetPrice - 1) {
                 notifier.notify({
                         title: `EthStonksWhen`,
                         message: `ETH has reached ${targetPrice}!`,
@@ -55,10 +56,10 @@ setInterval(() => {
                         appID: 'Created by Hextanium#5890!'
                     },
                     function (err, response) {
-                        err ? console.log(err) : true;
+                        err ? console.log(err) : true; // err go brrrr (windows notif related)
                     }
                 );
             }
         })
-        .catch(console.error);
+        .catch(console.error); // another error go brrr (api related)
 }, time)
